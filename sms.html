@@ -1,0 +1,53 @@
+<script type="text/x-red" data-template-name="sms-out">
+  <div class="form-row">
+    <label for="node-input-text"><i class="fa fa-tasks"></i> <span data-i18n="sms.text"></span></label>
+    <input type="text" id="node-input-text" data-i18n="[placeholder]sms.textplaceholder">
+  </div>
+  <div class="form-row">
+    <label for="node-input-to"><i class="fa fa-tasks"></i> <span data-i18n="sms.to"></span></label>
+    <input type="text" id="node-input-to" data-i18n="[placeholder]sms.toplaceholder">
+  </div>
+  <div class="form-row">
+    <label for="node-input-protocol"><i class="fa fa-tag"></i> Protocol</label>
+    <select id="node-input-protocol">
+      <option value="http" selected>http</option>
+      <option value="mqtt">mqtt</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="sms.name"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]sms.name">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="sms-out">
+  send a sms using DigitalAirways api
+  <ul>
+    <li>The text to send can be set in msg.message, msg.text or msg.payload</li>
+    <li>The text supports the Mustache syntax</li>
+    <li>The target phone number to use can be set in msg.to</li>
+  </ul>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('sms-out',{
+    category: 'basic',
+    defaults: {
+      text: { value: "" },
+      to: { value: "" },
+      name: { value: "" },
+      protocol : {value: ""}
+    },
+    color: "#FFF",
+    inputs:1,
+    outputs: 1,
+    icon: "sms.png",
+    align: "right",
+    label: function() {
+      return this.name || this.text || "send sms";
+    },
+    labelStyle: function() {
+      return this.name ? "node_label_italic" : "";
+    }
+  });
+</script>

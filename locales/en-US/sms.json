@@ -1,0 +1,9 @@
+{
+  "sms": {
+    "text": "Text",
+    "textplaceholder": "Texte to send",
+    "to": "to",
+    "toplaceholder": "+336XXXXXXXX",
+    "name": "Name"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "sms",
+  "version": "0.1.0",
+  "node-red": {
+    "nodes": {
+      "sms": "sms.js"
+    }
+  },
+  "dependencies": {
+    "mustache": "2.1.2",
+    "uuid": "3.2.1",
+    "mqtt": "2.18.0",
+    "follow-redirects": "1.5.0"
+  }
+}

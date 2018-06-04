@@ -1,0 +1,9 @@
+{
+  "sms": {
+    "text": "Texte",
+    "textplaceholder": "Texte à envoyer",
+    "to": "Destinataire",
+    "toplaceholder": "+336XXXXXXXX",
+    "name": "Nom"
+  }
+}
