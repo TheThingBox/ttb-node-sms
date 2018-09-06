@@ -185,7 +185,6 @@ module.exports = function(RED) {
         payload += chunk;
       });
       res.on('end',function() {
-        console.log(payload)
         callback(payload)
       });
     });
