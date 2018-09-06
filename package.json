@@ -1,6 +1,6 @@
 {
-  "name": "sms",
-  "version": "0.1.0",
+  "name": "ttb-node-sms",
+  "version": "0.2.0",
   "node-red": {
     "nodes": {
       "sms": "sms.js"

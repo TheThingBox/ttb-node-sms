@@ -59,14 +59,18 @@ module.exports = function(RED) {
         try{
           payload = JSON.parse(payload);
         }catch(e){}
+        var _payload = payload
 
         try{
-          payload = JSON.parse(payload.data);
+          payload = JSON.parse(payload.payload);
         }catch(e){
-          payload = payload.data;
+          payload = payload.payload;
         }
 
-        if(payload.hasOwnProperty("needAccount")){
+        if(_payload.hasOwnProperty("error")){
+            data = _payload.payload;
+            err = true;
+        } else if(payload.hasOwnProperty("needAccount")){
           data = "You need an account to use our services.";
           err = true;
         } else if(payload.hasOwnProperty("needActivation")){
@@ -135,7 +139,7 @@ module.exports = function(RED) {
       switch(protocol){
         case 'http' :
           sendHTTP({
-            "url": "http://mythingbox.io/api/V2/sendsms/V2",
+            "url": "http://mythingbox.io/api/services/sendsms",
             "payload":{
               "to":to,
               "payload":text
@@ -145,7 +149,7 @@ module.exports = function(RED) {
         case 'mqtt' :
           var msgid = uuid();
           sendMQTT({
-            "topic": "api/sendsms/{{{ttb_id}}}/"+msgid,
+            "topic": "api/services/sendsms/{{{ttb_id}}}/"+msgid,
             "backtopic": "receive/"+msgid,
             "payload":{
               "to":to,
@@ -165,10 +169,14 @@ module.exports = function(RED) {
     var code;
     var payload;
 
+    try{
+      message = JSON.stringify(message);
+    } catch(e){}
+
     opts.method = "POST";
     opts.headers = {};
     opts.headers['content-type'] = "application/json";
-    opts.headers['content-length'] = Buffer.byteLength(payload);
+    opts.headers['content-length'] = Buffer.byteLength(message);
 
     var req = http.request(opts,function(res) {
       code = res.statusCode;
@@ -177,15 +185,13 @@ module.exports = function(RED) {
         payload += chunk;
       });
       res.on('end',function() {
+        console.log(payload)
         callback(payload)
       });
     });
     req.on('error',function(err) {
       callback(err.toString() + " : " + url, err)
     });
-    try{
-      message = JSON.stringify(message);
-    } catch(e){}
     req.write(message);
     req.end();
   }
