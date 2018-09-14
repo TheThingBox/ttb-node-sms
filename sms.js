@@ -123,7 +123,12 @@ module.exports = function(RED) {
           answer.statusCode = err.code
           answer.message = err.toString()
         } else {
-          answer = processAnswer(data)
+          try {
+            answer = processAnswer(data)
+          } catch(e){
+            msg.payload = null
+            node.send(msg);
+          }
         }
 
         if(answer.warn){
